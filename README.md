@@ -53,16 +53,24 @@ For the v2 version, we adopt the below operations to improve the performance:
 # Inference
 
 1. Clone repository
-`git clone https://github.com/newgenai79/ControlNeXt-SVD-v2`
+```
+git clone https://github.com/newgenai79/ControlNeXt-SVD-v2
+```
 
 2. Navigate inside cloned repo
-`cd ControlNeXt-SVD-v2`
+```
+cd ControlNeXt-SVD-v2
+```
 
 3. Create virtual environment
-`python -m venv venv`
+```
+python -m venv venv
+```
 
 4. Activate virtual environment
-`venv\script\activate`
+```
+venv\script\activate
+```
 
 5. Install wheel
 `pip install wheel`
