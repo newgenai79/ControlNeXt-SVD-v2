@@ -73,13 +73,19 @@ venv\script\activate
 ```
 
 5. Install wheel
-`pip install wheel`
+```
+pip install wheel
+```
 
 6. Install requirements
-`pip install -r requirements.txt`
+```
+pip install -r requirements.txt
+```
 
 7. Download examples folder from original repo
-`https://github.com/dvlab-research/ControlNeXt/tree/main/ControlNeXt-SVD-v2`
+```
+https://github.com/dvlab-research/ControlNeXt/tree/main/ControlNeXt-SVD-v2
+```
 
 8. Download pretrained weights
 
@@ -96,7 +102,9 @@ venv\script\activate
 ```
 8.3
 Clone SVD model in root folder
-`git clone https://huggingface.co/stabilityai/stable-video-diffusion-img2vid-xt-1-1 stabilityai/stable-video-diffusion-img2vid-xt-1-1`
+```
+git clone https://huggingface.co/stabilityai/stable-video-diffusion-img2vid-xt-1-1 stabilityai/stable-video-diffusion-img2vid-xt-1-1
+```
 
 ```
 ControlNeXt-SVD-v2\stabilityai
