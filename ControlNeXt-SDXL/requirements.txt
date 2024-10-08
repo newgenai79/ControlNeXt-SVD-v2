@@ -1,9 +1,0 @@
-torch
-opencv-python
-pillow
-numpy
-transformers
-diffusers
-safetensors
-peft
-einops

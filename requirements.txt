@@ -1,11 +1,16 @@
-torch
-moviepy
-opencv-python
-pillow
-numpy
-transformers
-diffusers
-safetensors
-peft
-decord
-einops
+--extra-index-url https://download.pytorch.org/whl/cu121
+torch==2.4.1+cu121
+torchvision==0.19.1+cu121
+moviepy==1.0.3
+opencv-python==4.10.0.84
+pillow==10.4.0
+numpy==2.1.2
+transformers==4.45.2
+diffusers==0.30.3
+safetensors==0.4.5
+peft==0.13.0
+decord==0.6.0
+einops==0.8.0
+omegaconf==2.3.0
+matplotlib==3.9.2
+onnxruntime-gpu==1.19.2
