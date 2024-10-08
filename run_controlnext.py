@@ -220,15 +220,25 @@ if __name__ == "__main__":
         args.pretrained_model_name_or_path,
         subfolder="unet",
         low_cpu_mem_usage=True,
+        torch_dtype=torch.float16, 
+        variant="fp16",
     )
     controlnext = ControlNeXtSDVModel()
     controlnext.load_state_dict(load_tensor(args.controlnext_path))
     unet.load_state_dict(load_tensor(args.unet_path), strict=False)
 
     image_encoder = CLIPVisionModelWithProjection.from_pretrained(
-        args.pretrained_model_name_or_path, subfolder="image_encoder")
+        args.pretrained_model_name_or_path, 
+        subfolder="image_encoder",
+        torch_dtype=torch.float16, 
+        variant="fp16",
+    )
     vae = AutoencoderKLTemporalDecoder.from_pretrained(
-        args.pretrained_model_name_or_path, subfolder="vae")
+        args.pretrained_model_name_or_path, 
+        subfolder="vae",
+        torch_dtype=torch.float16, 
+        variant="fp16",
+    )
     
     pipeline = StableVideoDiffusionPipelineControlNeXt.from_pretrained(
         args.pretrained_model_name_or_path,
@@ -236,7 +246,7 @@ if __name__ == "__main__":
         unet=unet,
         vae=vae,
         image_encoder=image_encoder)
-    # pipeline.to(dtype=torch.float16)
+    pipeline.to(dtype=torch.float16)
     pipeline.enable_model_cpu_offload()
 
     os.makedirs(args.output_dir, exist_ok=True)

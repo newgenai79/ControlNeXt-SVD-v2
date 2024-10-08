@@ -52,10 +52,31 @@ For the v2 version, we adopt the below operations to improve the performance:
 
 # Inference
 
-1. Clone our repository
-2. `cd ControlNeXt-SVD-v2`
-3. Download the pretrained weight into `pretrained/` from [here](https://huggingface.co/Pbihao/ControlNeXt/tree/main/ControlNeXt-SVD/v2). (More details please refer to [Base Model](#base-model))
-4. Download the DWPose weights including the [dw-ll_ucoco_384](https://drive.google.com/file/d/12L8E2oAgZy4VACGSK9RaZBZrfgx7VTA2/view?usp=sharing) and [yolox_l](https://drive.google.com/file/d/1w9pXC8tT0p9ndMN-CArp1__b2GbzewWI/view?usp=sharing) into `pretrained/DWPose`. For more details, please refer to [DWPose](https://github.com/IDEA-Research/DWPose):
+1. Clone repository
+`git clone https://github.com/newgenai79/ControlNeXt-SVD-v2`
+
+2. Navigate inside cloned repo
+`cd ControlNeXt-SVD-v2`
+
+3. Create virtual environment
+`python -m venv venv`
+
+4. Activate virtual environment
+`venv\script\activate`
+
+5. Install wheel
+`pip install wheel`
+
+6. Install requirements
+`pip install -r requirements.txt`
+
+7. Download examples folder from original repo
+`https://github.com/dvlab-research/ControlNeXt/tree/main/ControlNeXt-SVD-v2`
+
+8. Download pretrained weights
+
+8.1. Download the pretrained weight into `pretrained/` from [here](https://huggingface.co/Pbihao/ControlNeXt/tree/main/ControlNeXt-SVD/v2). (More details please refer to [Base Model](#base-model))
+8.2. Download the DWPose weights including the [dw-ll_ucoco_384](https://drive.google.com/file/d/12L8E2oAgZy4VACGSK9RaZBZrfgx7VTA2/view?usp=sharing) and [yolox_l](https://drive.google.com/file/d/1w9pXC8tT0p9ndMN-CArp1__b2GbzewWI/view?usp=sharing) into `pretrained/DWPose`. For more details, please refer to [DWPose](https://github.com/IDEA-Research/DWPose):
 ```
 ├───pretrained
     └───DWPose
@@ -65,23 +86,42 @@ For the v2 version, we adopt the below operations to improve the performance:
     ├───unet.bin
     └───controlnet.bin
 ```
-5. Run the scipt
+8.3
+Clone SVD model in root folder
+`git clone https://huggingface.co/stabilityai/stable-video-diffusion-img2vid-xt-1-1 stabilityai/stable-video-diffusion-img2vid-xt-1-1`
 
-```bash
-CUDA_VISIBLE_DEVICES=0 python run_controlnext.py \
-  --pretrained_model_name_or_path stabilityai/stable-video-diffusion-img2vid-xt-1-1 \
-  --output_dir outputs \
-  --max_frame_num 240 \
-  --guidance_scale 3 \
-  --batch_frames 24 \
-  --sample_stride 2 \
-  --overlap 6 \
-  --height 1024 \
-  --width 576 \
-  --controlnext_path pretrained/controlnet.bin \
-  --unet_path pretrained/unet.bin \
-  --validation_control_video_path examples/video/02.mp4 \
-  --ref_image_path examples/ref_imgs/01.jpeg
+```
+ControlNeXt-SVD-v2\stabilityai
+	└───stable-video-diffusion-img2vid-xt-1-1
+		│   .gitattributes
+		│   LICENSE.md
+		│   model_index.json
+		│   README.md
+		│   svd11.webp
+		│   svd_xt_1_1.safetensors
+		│
+		├───feature_extractor
+		│       preprocessor_config.json
+		│
+		├───image_encoder
+		│       config.json
+		│       model.fp16.safetensors
+		│
+		├───scheduler
+		│       scheduler_config.json
+		│
+		├───unet
+		│       config.json
+		│       diffusion_pytorch_model.fp16.safetensors
+		│
+		└───vae
+				config.json
+				diffusion_pytorch_model.fp16.safetensors
+```
+9. Launch gradio WebUI
+
+```
+python app.py
 ```
 
 > --pretrained_model_name_or_path : pretrained base model, we pretrain and fintune models based on [SVD-XT1.1](https://huggingface.co/stabilityai/stable-video-diffusion-img2vid-xt-1-1)\
@@ -91,56 +131,10 @@ CUDA_VISIBLE_DEVICES=0 python run_controlnext.py \
 > --overlap: The length of the overlapped frames for long-frame video generation. \
 > --sample_stride: The length of the sampled stride for the conditional controls. You can set it to `1` to make more smooth generation wihile requires more computation.
 
-5. Face Enhancement (Optional，Recommand for bad faces)
-
-> Currently, the model is not specifically trained for IP consistency, as there are already many mature tools available. Additionally, alternatives like Animate Anyone also adopt such post-processing techniques. 
-
-a. Clone [Face Fusion](https://github.com/facefusion/facefusion): \
-```git clone https://github.com/facefusion/facefusion```
-
-b. Ensure to enter the directory:\
-```cd facefusion```
-
-c. Install facefusion (Recommand create a new virtual environment using conda to avoid conflicts):\
-```python install.py```
-
-d. Run the command:
-```
-python run.py \
-  -s ../outputs/demo.jpg \
-  -t ../outputs/demo.mp4 \
-  -o ../outputs/out.mp4 \
-  --headless \
-  --execution-providers cuda  \
-  --face-selector-mode one 
-```
-
-> -s: the reference image \
-> -t: the path to the original video\
-> -o: the path to store the refined video\
-> --headless: no gui need\
-> --execution-providers cuda: use cuda for acceleration (If available, most the cpu is enough)
-
-# Advanced Performance
-In this section, we will delve into additional details and my own experiences to enhance video generation. These factors are algorithm-independent and unrelated to academia, yet crucial for achieving superior results. Many closely related works incorporate these strategies.
 
 ### Reference Image
 
 It is crucial to ensure that the reference image is clear and easily understandable, especially aligning the face of the reference with the pose.
-
-
-### Face Enhencement
-
-Most related works utilize face enhancement as part of the post-processing. This is especially relevant when generating videos based on images of unfamiliar individuals, such as friends, who were not included in the base model's pretraining and are therefore unseen and OOD data.
-
-We recommand the [Facefusion](https://github.com/facefusion/facefusion
-) for the post proct-processing. And please let us know if you have a better solution.
-
-Please refer to [Facefusion](https://github.com/facefusion/facefusion
-) for more details.
-
-![Facefusion](examples/facefusion/facefusion.jpg)
-
 
 ### Continuously Finetune
 
@@ -165,7 +159,3 @@ This also leaves a possible direction for futher improvement.
 ## Base model
 
 The base model plays a crucial role in generating human features, particularly hands and faces. We encourage collaboration to improve the base model for enhanced human-related video generation.
-
-# TODO
-
-* Training and finetune code
