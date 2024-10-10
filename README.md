@@ -5,50 +5,10 @@ This is our implementation of ControlNeXt based on [Stable Video Diffusion](http
 Compared to image generation, video generation poses significantly greater challenges. While direct training of the generation model using our method is feasible, we also employ various engineering strategies to enhance performance. Although they are irrespective of academic algorithms.
 
 
-> Please refer to [Examples](#examples) for further intuitive details.\
-> Please refer to [Base model](#base-model) for more details of our used base model. \
 > Please refer to [Inference](#inference) for more details regarding installation and inference.\
 > Please refer to [Advanced Performance](#advanced-performance) for more details to achieve a better performance.\
 > Please refer to [Limitations](#limitations) for more details about the limitations of current work.
 
-# Examples
-If you can't load the videos, you can also directly download them from [here](examples/demos) and [here](examples/video).
-Or you can view them from our [Project Page](https://pbihao.github.io/projects/controlnext/index.html) or [BiliBili](https://www.bilibili.com/video/BV1wJYbebEE7/?buvid=YC4E03C93B119ADD4080B0958DE73F9DDCAC&from_spmid=dt.dt.video.0&is_story_h5=false&mid=y82Gz7uArS6jTQ6zuqJj3w%3D%3D&p=1&plat_id=114&share_from=ugc&share_medium=iphone&share_plat=ios&share_session_id=4E5549FC-0710-4030-BD2C-CDED80B46D08&share_source=WEIXIN&share_source=weixin&share_tag=s_i&timestamp=1723123770&unique_k=XLZLhCq&up_id=176095810&vd_source=3791450598e16da25ecc2477fc7983db).
-
-<table style="margin: 0 auto; border-collapse: collapse;">
-    <tr>
-        <td width="40%" style="border: none;">
-            <video width="100%" height="auto" style="display: block; margin: 0px auto;" controls autoplay loop src="https://github.com/user-attachments/assets/9d45a00a-d3cd-48e1-aa78-1d3158bfd4f4" muted="false"></video>
-        </td>
-        <td width="40%" style="border: none;">
-            <video width="100%" height="auto" style="display: block; margin: 0px auto;" controls autoplay loop src="https://github.com/user-attachments/assets/1004960a-82de-4f0d-a329-ba676b8cbd0d" muted="false"></video>
-        </td>
-    </tr>
-    <tr>
-        <td width="40%" style="border: none;">
-            <video width="100%" height="auto" style="display: block; margin: 0px auto;" controls autoplay loop src="https://github.com/user-attachments/assets/7db1acd1-0c61-4855-91bb-e4e8f8989393" muted="false"></video>
-        </td>
-        <td width="40%" style="border: none;">
-            <video width="100%" height="auto" style="display: block; margin: 0px auto;" controls autoplay loop src="https://github.com/user-attachments/assets/0f32df53-1827-404d-806a-23e65d357504" muted="false"></video>
-        </td>
-    </tr>
-
-</table>
-
-<video width="80%" height="auto" style="display: block; margin: 0px auto;" controls autoplay loop src="https://github.com/user-attachments/assets/c69b4f34-0851-4637-a9ef-fb91beed5666" muted="false"></video>
-
-<video width="80%" height="auto" style="display: block; margin: 0px auto;" controls autoplay loop src="https://github.com/user-attachments/assets/32a4d24b-bc39-4ea9-9fd4-ed78b4eec116" muted="false"></video>
-
-
-# Base Model
-
-For the v2 version, we adopt the below operations to improve the performance:
-* We have collected a higher-quality dataset with higher resolution to train our model.
-* We have extended the training and inference batch frames to 24.
-* We have extended the video height and width to a resolution of 576 × 1024.
-* We conduct extensive continual training of SVD on human-related videos to enhance its ability to generate human-related content.
-* We adopt fp32.
-* We adopt the pose alignment during the inference following the related.
 
 # Inference
 
