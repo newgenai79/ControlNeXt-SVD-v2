@@ -29,7 +29,7 @@ python -m venv venv
 
 4. Activate virtual environment
 ```
-venv\script\activate
+venv\scripts\activate
 ```
 
 5. Install wheel
