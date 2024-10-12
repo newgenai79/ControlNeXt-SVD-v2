@@ -65,7 +65,7 @@ def run_inference(video_path, ref_image_path,
         yield f"Error occurred: {str(e)}"
 
 with gr.Blocks() as demo:
-    gr.Markdown("# Video Inference UI")
+    gr.Markdown("# ControlNeXt-SVD v2 WebUI")
     
     with gr.Row():
         with gr.Column():
