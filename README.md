@@ -10,6 +10,9 @@ Compared to image generation, video generation poses significantly greater chall
 > Please refer to [Limitations](#limitations) for more details about the limitations of current work.
 
 
+# Video tutorial
+https://www.youtube.com/watch?v=FwwhwshJW-I
+
 # Inference
 
 1. Clone repository
